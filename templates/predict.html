@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="predict-wrapper">
+
+<div class="predict-card">
+
+<h1 class="predict-title">
+🚰 Water Scarcity Prediction
+</h1>
+
+<p class="predict-subtitle">
+Enter country and water consumption parameters to estimate the water scarcity level using machine learning.
+</p>
+
+<form method="POST">
+
+<!-- COUNTRY + YEAR -->
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Country</label>
+<select name="Country" class="form-control">
+
+{% for country in countries %}
+<option value="{{ country }}">{{ country }}</option>
+{% endfor %}
+
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Year</label>
+<input type="number" name="Year" class="form-control" required>
+</div>
+
+</div>
+
+
+<!-- WATER CONSUMPTION -->
+
+<h5 class="section-label">Water Consumption</h5>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Total Water Consumption (BCM)</label>
+<input type="number" step="0.01" name="Total_Water" class="form-control" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Per Capita Water Use (Liters / Day)</label>
+<input type="number" step="0.01" name="Per_Capita" class="form-control" required>
+</div>
+
+</div>
+
+
+<!-- SECTOR USAGE -->
+
+<h5 class="section-label">Water Usage Distribution</h5>
+
+<div class="row">
+
+<div class="col-md-4 mb-3">
+<label>Agriculture (%)</label>
+<input type="number" step="0.01" name="Agri_Water" class="form-control" required>
+</div>
+
+<div class="col-md-4 mb-3">
+<label>Industry (%)</label>
+<input type="number" step="0.01" name="Industrial_Water" class="form-control" required>
+</div>
+
+<div class="col-md-4 mb-3">
+<label>Household (%)</label>
+<input type="number" step="0.01" name="Household_Water" class="form-control" required>
+</div>
+
+</div>
+
+
+<!-- ENVIRONMENTAL FACTORS -->
+
+<h5 class="section-label">Environmental Factors</h5>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Annual Rainfall (mm)</label>
+<input type="number" step="0.01" name="Rainfall" class="form-control" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Groundwater Depletion (%)</label>
+<input type="number" step="0.01" name="Groundwater" class="form-control" required>
+</div>
+
+</div>
+
+
+<button type="submit" class="btn btn-success predict-btn">
+🔍 Predict Water Scarcity
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<style>
+
+/* WRAPPER */
+
+.predict-wrapper{
+display:flex;
+justify-content:center;
+margin-top:20px;
+}
+
+/* CARD */
+
+.predict-card{
+
+max-width:900px;
+width:100%;
+
+padding:40px;
+
+border-radius:16px;
+
+background:rgba(2,6,23,0.9);
+
+box-shadow:
+0 20px 45px rgba(0,0,0,0.7),
+inset 0 0 0 1px rgba(255,255,255,0.05);
+
+animation:fadeUp 0.7s ease;
+
+}
+
+/* TITLE */
+
+.predict-title{
+
+text-align:center;
+font-weight:700;
+
+color:#38bdf8;
+
+margin-bottom:10px;
+
+}
+
+/* SUBTITLE */
+
+.predict-subtitle{
+
+text-align:center;
+
+color:#94a3b8;
+
+margin-bottom:30px;
+
+}
+
+/* SECTION LABELS */
+
+.section-label{
+
+margin-top:25px;
+
+margin-bottom:15px;
+
+color:#7dd3fc;
+
+font-weight:600;
+
+}
+
+/* BUTTON */
+
+.predict-btn{
+
+margin-top:25px;
+
+width:100%;
+
+padding:14px;
+
+font-size:16px;
+
+font-weight:600;
+
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+</style>
+
+{% endblock %}

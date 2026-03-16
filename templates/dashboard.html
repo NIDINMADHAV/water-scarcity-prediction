@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+<h1 class="text-center dashboard-title mb-5">
+    🌊 Water Scarcity Analytics Dashboard
+</h1>
+
+<div class="row mb-5">
+
+    <div class="col-md-4">
+        <div class="stats-card">
+            <h3>{{ total_predictions }}</h3>
+            <p>Total Dataset Records</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stats-card">
+            <h3>{{ most_country }}</h3>
+            <p>Most Recorded Country</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stats-card">
+            <h3>{{ avg_accuracy }}</h3>
+            <p>Average Model Accuracy</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== MODEL ACCURACY ===== -->
+
+<h2 class="section-title">📊 Model Accuracy Comparison</h2>
+
+<div class="card dashboard-card mb-5">
+    <canvas id="accuracyChart"></canvas>
+</div>
+
+
+<!-- ===== BAR CHART ===== -->
+
+<h2 class="section-title">🚰 Water Scarcity by Country</h2>
+
+<div class="card dashboard-card mb-5">
+    <div id="bar-chart"></div>
+</div>
+
+
+<!-- ===== WORLD MAP ===== -->
+
+<h2 class="section-title">🌍 Global Water Scarcity Map</h2>
+
+<div class="card dashboard-card mb-5">
+    <div id="choropleth-map"></div>
+</div>
+
+
+<!-- ===== PREDICTION HISTORY ===== -->
+
+<h2 class="section-title">🧾 Your Prediction History</h2>
+
+<div class="card dashboard-card mb-5">
+
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th>Country</th>
+            <th>Year</th>
+            <th>Prediction</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for p in history %}
+        <tr>
+            <td>{{ p.country }}</td>
+            <td>{{ p.year }}</td>
+            <td>
+                {% if p.result == "High" %}
+                    <span class="badge bg-danger">High</span>
+                {% elif p.result == "Medium" %}
+                    <span class="badge bg-warning text-dark">Medium</span>
+                {% else %}
+                    <span class="badge bg-success">Low</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+
+/* ===== MODEL ACCURACY CHART ===== */
+
+const ctx = document.getElementById('accuracyChart').getContext('2d');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ models | tojson }},
+        datasets: [{
+            label: 'Accuracy',
+            data: {{ accuracies | tojson }},
+            backgroundColor: [
+                '#00e5ff','#7c4dff','#1de9b6',
+                '#ff6d00','#ff1744','#00c853',
+                '#ff9100','#651fff','#2979ff'
+            ],
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive:true,
+        plugins:{
+            legend:{
+                labels:{ color:'#ffffff' }
+            }
+        },
+        scales:{
+            x:{ ticks:{ color:'#ffffff' }},
+            y:{
+                ticks:{ color:'#ffffff' },
+                beginAtZero:true,
+                max:1
+            }
+        }
+    }
+});
+
+
+/* ===== PLOTLY BAR CHART ===== */
+
+var barGraphs = {{ barJSON | safe }};
+barGraphs.layout.paper_bgcolor = 'rgba(0,0,0,0)';
+barGraphs.layout.plot_bgcolor = 'rgba(0,0,0,0)';
+barGraphs.layout.font = { color:'#ffffff' };
+
+Plotly.newPlot('bar-chart', barGraphs.data, barGraphs.layout);
+
+
+/* ===== WORLD MAP ===== */
+
+var mapGraphs = {{ mapJSON | safe }};
+mapGraphs.layout.paper_bgcolor = 'rgba(0,0,0,0)';
+mapGraphs.layout.font = { color:'#ffffff' };
+
+Plotly.newPlot('choropleth-map', mapGraphs.data, mapGraphs.layout);
+
+</script>
+
+
+<style>
+
+/* DASHBOARD TITLE */
+
+.dashboard-title{
+    font-weight:700;
+    color:#00e5ff;
+    text-shadow:0 0 10px rgba(0,229,255,0.6);
+}
+
+/* SECTION HEADINGS */
+
+.section-title{
+    text-align:center;
+    margin-bottom:25px;
+    color:#e2e8f0;
+    font-weight:600;
+}
+
+/* CARD STYLE */
+
+.dashboard-card{
+    background:linear-gradient(145deg,#020617,#0f172a);
+    border-radius:15px;
+    padding:30px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+
+    transition:0.3s;
+}
+
+/* CARD HOVER */
+
+.dashboard-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 20px 45px rgba(0,0,0,0.7);
+}
+
+/* TABLE */
+
+.table{
+    margin-top:15px;
+}
+
+.stats-card{
+    background:linear-gradient(145deg,#020617,#0f172a);
+    padding:25px;
+    border-radius:14px;
+    text-align:center;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+
+    transition:0.3s;
+}
+
+.stats-card:hover{
+    transform:translateY(-4px);
+}
+
+.stats-card h3{
+    font-size:32px;
+    color:#00e5ff;
+    margin-bottom:5px;
+}
+
+.stats-card p{
+    color:#cbd5f5;
+}
+
+</style>
+
+{% endblock %}

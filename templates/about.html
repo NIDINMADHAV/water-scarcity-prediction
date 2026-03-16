@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="about-container">
+
+<div class="about-card">
+
+<h1 class="about-title">
+    🌊 Water Scarcity Prediction System
+</h1>
+
+<p class="about-subtitle">
+    An intelligent machine learning platform designed to analyze global water consumption patterns
+    and predict potential water scarcity levels using advanced predictive models and interactive
+    visual analytics.
+</p>
+
+<hr class="about-divider">
+
+
+<!-- OBJECTIVES -->
+
+<h3 class="section-heading">🎯 Project Objectives</h3>
+
+<div class="feature-grid">
+
+<div class="feature-box">
+    <h5>Data Analysis</h5>
+    <p>Analyze global water consumption trends across countries and time periods.</p>
+</div>
+
+<div class="feature-box">
+    <h5>Predictive Modeling</h5>
+    <p>Utilize machine learning algorithms to classify water scarcity risk levels.</p>
+</div>
+
+<div class="feature-box">
+    <h5>Interactive Visualization</h5>
+    <p>Display insights through dynamic charts and global mapping dashboards.</p>
+</div>
+
+<div class="feature-box">
+    <h5>Decision Support</h5>
+    <p>Enable data-driven insights for sustainable water resource management.</p>
+</div>
+
+</div>
+
+
+<hr class="about-divider">
+
+
+<!-- MODELS -->
+
+<h3 class="section-heading">🤖 Machine Learning Models Evaluated</h3>
+
+<div class="models-grid">
+
+<span class="model-badge">Naïve Bayes</span>
+<span class="model-badge">Logistic Regression</span>
+<span class="model-badge">Support Vector Machine</span>
+<span class="model-badge">Decision Tree</span>
+<span class="model-badge">Random Forest</span>
+<span class="model-badge">AdaBoost</span>
+<span class="model-badge">Gradient Boosting</span>
+<span class="model-badge">K-Nearest Neighbors</span>
+<span class="model-badge highlight">XGBoost (Best Model)</span>
+
+</div>
+
+
+<hr class="about-divider">
+
+
+<!-- FEATURES -->
+
+<h3 class="section-heading">⚙ Key Platform Features</h3>
+
+<div class="feature-grid">
+
+<div class="feature-box">
+    <h5>Secure Authentication</h5>
+    <p>User registration and login with encrypted password storage.</p>
+</div>
+
+<div class="feature-box">
+    <h5>Prediction Engine</h5>
+    <p>Machine learning model predicts water scarcity levels based on real inputs.</p>
+</div>
+
+<div class="feature-box">
+    <h5>Analytics Dashboard</h5>
+    <p>Interactive charts and maps visualize global water scarcity patterns.</p>
+</div>
+
+<div class="feature-box">
+    <h5>Modern User Interface</h5>
+    <p>Responsive dark themed UI designed for clarity and usability.</p>
+</div>
+
+</div>
+
+
+<div class="text-center mt-5">
+
+<a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+    Explore Analytics Dashboard
+</a>
+
+</div>
+
+</div>
+</div>
+
+
+<style>
+
+/* PAGE LAYOUT */
+
+.about-container{
+    display:flex;
+    justify-content:center;
+}
+
+/* MAIN CARD */
+
+.about-card{
+    max-width:1000px;
+    width:100%;
+    padding:50px;
+
+    border-radius:18px;
+
+    background:linear-gradient(145deg,#020617,#0f172a);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.7),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+
+    animation:fadeIn 0.7s ease;
+}
+
+/* TITLE */
+
+.about-title{
+    text-align:center;
+    font-weight:700;
+    color:#00e5ff;
+    margin-bottom:15px;
+}
+
+/* SUBTITLE */
+
+.about-subtitle{
+    text-align:center;
+    color:#cbd5f5;
+    font-size:16px;
+    margin-bottom:30px;
+}
+
+/* DIVIDER */
+
+.about-divider{
+    border-color:rgba(255,255,255,0.15);
+    margin:35px 0;
+}
+
+/* SECTION HEADINGS */
+
+.section-heading{
+    text-align:center;
+    color:#e2e8f0;
+    margin-bottom:25px;
+}
+
+/* GRID LAYOUT */
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+/* FEATURE BOX */
+
+.feature-box{
+    background:#020617;
+    padding:20px;
+    border-radius:12px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.6);
+
+    transition:0.25s;
+}
+
+.feature-box:hover{
+    transform:translateY(-3px);
+}
+
+.feature-box h5{
+    color:#00e5ff;
+}
+
+.feature-box p{
+    color:#cbd5f5;
+    font-size:14px;
+}
+
+/* MODEL BADGES */
+
+.models-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:center;
+}
+
+.model-badge{
+    padding:8px 16px;
+    border-radius:20px;
+    background:#020617;
+    color:#e2e8f0;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.highlight{
+    background:#00e5ff;
+    color:#020617;
+    font-weight:600;
+}
+
+/* DASHBOARD BUTTON */
+
+.dashboard-btn{
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+    padding:14px 30px;
+    border-radius:10px;
+    color:white;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.dashboard-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,114,255,0.5);
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+</style>
+
+{% endblock %}
